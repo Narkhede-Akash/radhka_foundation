@@ -1,4 +1,3 @@
-// custom_drawer.dart
 import 'package:flutter/material.dart';
 import '../screens/home_screen.dart';
 import '../screens/about_screen.dart';
@@ -22,13 +21,17 @@ class _CustomDrawerState extends State<CustomDrawer> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.indigo,
+          DrawerHeader(
+            decoration: const BoxDecoration(
+              color: Colors.black12,
             ),
-            child: Text(
-              'Menu',
-              style: TextStyle(color: Colors.white, fontSize: 24),
+            child: Center(
+              child: Image.asset(
+                'assets/images/founder.png',
+                width: 300,
+                height: 100,
+                fit: BoxFit.contain,
+              ),
             ),
           ),
           _drawerItem(context, 'Home', '/'),
@@ -42,6 +45,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
       ),
     );
   }
+
   Widget _getPageFromRoute(String route) {
     switch (route) {
       case '/about':
@@ -62,16 +66,32 @@ class _CustomDrawerState extends State<CustomDrawer> {
   }
 
   ListTile _drawerItem(BuildContext context, String title, String route) {
+    final currentRoute = ModalRoute
+        .of(context)
+        ?.settings
+        .name;
+    final isSelected = currentRoute == route;
+
     return ListTile(
-      title: Text(title),
+      selected: isSelected,
+      selectedTileColor: Colors.indigo.shade100,
+      title: Text(
+        title,
+        style: TextStyle(
+          fontSize: 25,
+          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+          color: isSelected ? Colors.black : Colors.black87,
+        ),
+      ),
       onTap: () {
         Navigator.pop(context);
-        // Navigator.pushNamed(context, route);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => _getPageFromRoute(route)),
+          MaterialPageRoute(
+            builder: (_) => _getPageFromRoute(route),
+            settings: RouteSettings(name: route), // ✅ Important!
+          ),
         );
-
       },
     );
   }
