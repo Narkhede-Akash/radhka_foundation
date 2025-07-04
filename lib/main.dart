@@ -6,6 +6,7 @@ import 'screens/gallery_screen.dart';
 import 'screens/doctors_screen.dart';
 import 'screens/donate_screen.dart';
 import 'screens/contact_screen.dart';
+import 'screens/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,8 +23,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      initialRoute: '/',
+      initialRoute: '/splash',
       routes: {
+        '/splash': (context) => const SplashScreen(),
         '/': (context) => const HomeScreen(),
         '/about': (context) => const AboutPage(),
         '/activities': (context) => const ActivitiesPage(),
